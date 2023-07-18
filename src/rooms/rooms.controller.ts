@@ -1,5 +1,6 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, HttpException, HttpStatus} from '@nestjs/common';
 import {RoomService} from './rooms.service';
+import {RoomDTO} from "./dto/room.dto";
 
 
 @Controller('rooms')
@@ -8,8 +9,13 @@ export class RoomsController {
     }
 
     @Get()
-    findAll() {
-        return this.roomService.getRooms();
+    async findAll(): Promise<ControllerResponse<any>> {
+        try {
+            const result = await this.roomService.getRooms();
+            return {result, message: 'All rooms found'}
+        } catch (error) {
+            throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
+        }
     }
 
 }
