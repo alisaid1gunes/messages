@@ -8,9 +8,8 @@ import configuration from './config/configuration';
 import {User} from "./users/entities/user.entity";
 import { RoomsModule } from './rooms/rooms.module';
 import {Room} from "./rooms/entities/room.entity";
-import { RoomMessagesModule } from './room-messages/room-messages.module';
-import { RoomMessagesModule } from './room-messages/room-messages.module';
 import {RoomMessage} from "./room-messages/entities/rom-message.entity";
+import {RoomMessagesModule} from "./room-messages/room-messages.module";
 
 
 @Module({
