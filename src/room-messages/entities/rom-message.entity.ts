@@ -18,20 +18,20 @@ export class RoomMessage {
     @Column()
     content: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date;
 
     @ManyToOne(() => User)
-    @JoinColumn({ name: 'senderId' })
+    @JoinColumn({name: 'senderId'})
     sender: User;
 
     @ManyToOne(() => User)
-    @JoinColumn({ name: 'receiverId' })
+    @JoinColumn({name: 'receiverId'})
     receiver: User;
 
     @ManyToOne(() => Room, (room) => room.messages)
     room: Room;
 
-    @Column({ default: false })
+    @Column({default: false})
     isDeleted: boolean;
 }

@@ -1,14 +1,15 @@
-import { Controller, Get, Param, Delete } from '@nestjs/common';
-import { RoomsService } from './rooms.service';
+import {Controller, Get} from '@nestjs/common';
+import {RoomService} from './rooms.service';
 
 
 @Controller('rooms')
 export class RoomsController {
-  constructor(private readonly roomsService: RoomsService) {}
+    constructor(private readonly roomService: RoomService) {
+    }
 
-  @Get()
-  findAll() {
-    return this.roomsService.findAll();
-  }
+    @Get()
+    findAll() {
+        return this.roomService.getRooms();
+    }
 
 }

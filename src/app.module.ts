@@ -10,6 +10,7 @@ import { RoomsModule } from './rooms/rooms.module';
 import {Room} from "./rooms/entities/room.entity";
 import {RoomMessage} from "./room-messages/entities/rom-message.entity";
 import {RoomMessagesModule} from "./room-messages/room-messages.module";
+import { SeedService } from './seed/seed.service';
 
 
 @Module({
@@ -32,6 +33,6 @@ import {RoomMessagesModule} from "./room-messages/room-messages.module";
     RoomMessagesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeedService],
 })
 export class AppModule {}

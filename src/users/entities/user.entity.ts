@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 
 @Entity()
 export class User {
@@ -11,6 +11,6 @@ export class User {
     @Column()
     photo: string;
 
-    @Column({ default: false })
+    @Column({default: false})
     isDeleted: boolean;
 }
