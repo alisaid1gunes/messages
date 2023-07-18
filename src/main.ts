@@ -1,5 +1,6 @@
 import {NestFactory} from '@nestjs/core';
 import helmet from 'helmet';
+import * as compression from 'compression';
 import {AppModule} from './app.module';
 import configuration from "./config/configuration";
 import {CustomResponseInterceptor} from "./interceptors/CustomResponseInterceptor";
@@ -9,6 +10,9 @@ async function bootstrap() {
     app.enableCors();
     app.use(helmet());
     app.useGlobalInterceptors(new CustomResponseInterceptor());
+    app.use(compression({
+        filter: function () { return true; }
+    }));
     await app.listen(configuration().port);
 }
 
