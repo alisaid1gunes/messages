@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import {Room} from "./entities/room.entity";
+import {InjectRepository} from "@nestjs/typeorm";
+import {Repository} from "typeorm";
 
 
 @Injectable()
 export class RoomsService {
 
-
+  constructor(
+      @InjectRepository(Room)
+      private roomRepository: Repository<Room>,
+  ) {}
   findAll() {
     return `This action returns all rooms`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} room`;
-  }
-
-
-
-  remove(id: number) {
-    return `This action removes a #${id} room`;
-  }
 }
