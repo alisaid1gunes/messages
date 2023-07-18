@@ -14,7 +14,7 @@ export class RoomsController {
             const result = await this.roomService.getRooms();
             return {result, message: 'All rooms found'}
         } catch (error) {
-            throw new HttpException('Users not found', HttpStatus.NOT_FOUND);
+            throw new HttpException('Rooms not found', HttpStatus.NOT_FOUND);
         }
     }
 

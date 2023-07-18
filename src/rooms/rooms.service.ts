@@ -17,7 +17,7 @@ export class RoomService {
     async getRooms(): Promise<{ rooms: RoomDTO[] }> {
         const rooms = await this.roomRepository.createQueryBuilder('room')
             .leftJoinAndSelect('room.messages', 'message')
-            .leftJoinAndSelect('message.sender', 'sender')
+            .leftJoinAndSelect('message.sednder', 'sender')
             .leftJoinAndSelect('message.receiver', 'receiver')
             .where((qb) => {
                 const subQuery = qb.subQuery()
