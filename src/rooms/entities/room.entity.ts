@@ -14,7 +14,6 @@ export class Room {
     @Column({default: false})
     isDeleted: boolean;
 
-    @Index()
     @OneToMany(() => RoomMessage, (message) => message.room)
     messages: RoomMessage[];
 }

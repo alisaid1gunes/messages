@@ -15,7 +15,7 @@ export class RoomMessage {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({length:255})
+    @Column({length:255, nullable:false})
     content: string;
 
     @Index()

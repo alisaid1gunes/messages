@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { RoomsService } from './rooms.service';
 import { Room } from './entities/room.entity';
 import {RoomMapper} from "./mapper/RoomMapper";
+import {Pagination} from "../shared/pagination";
 
 describe('RoomsService', () => {
   let service: RoomsService;
@@ -92,7 +93,7 @@ describe('RoomsService', () => {
       },
     ];
 
-    const result = await service.getRooms();
+    const result = await service.getRooms(new Pagination(1, 5));
 
     expect(result).toEqual({ rooms: roomDTOs });
     expect(roomRepositoryMock.createQueryBuilder).toHaveBeenCalled();
