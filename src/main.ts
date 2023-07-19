@@ -4,7 +4,8 @@ import * as compression from 'compression';
 import {AppModule} from './app.module';
 import configuration from "./config/configuration";
 import {CustomResponseInterceptor} from "./interceptors/CustomResponseInterceptor";
-import createSwaggerConfig from "../swagger/config";
+import createSwaggerConfig from "./swagger/config";
+
 
 
 async function bootstrap() {
