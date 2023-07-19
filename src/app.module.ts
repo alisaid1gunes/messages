@@ -33,7 +33,6 @@ import {HttpExceptionFilter} from "./filters/http-exception.filter";
         RoomsModule,
         RoomMessagesModule,
     ],
-    controllers: [AppController],
     providers: [AppService, SeedService, {
         provide: APP_FILTER,
         useClass: HttpExceptionFilter,

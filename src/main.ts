@@ -19,6 +19,7 @@ async function bootstrap() {
             return true;
         }
     }));
+
     await app.listen(configuration().port);
 }
 
