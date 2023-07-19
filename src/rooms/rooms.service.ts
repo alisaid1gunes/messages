@@ -6,7 +6,7 @@ import {RoomDTO} from "./dto/room.dto";
 import {RoomMapper} from "./mapper/RoomMapper";
 
 @Injectable()
-export class RoomService {
+export class RoomsService {
     constructor(
         @InjectRepository(Room)
         private readonly roomRepository: Repository<Room>,
