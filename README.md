@@ -1,4 +1,4 @@
-# Messaging Service
+# Messages
 
 ## Introduction
 
