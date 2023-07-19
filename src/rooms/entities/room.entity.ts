@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, Index} from 'typeorm';
 import {RoomMessage} from "../../room-messages/entities/rom-message.entity";
 
 
@@ -7,12 +7,14 @@ export class Room {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Index()
     @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     createdAt: Date;
 
     @Column({default: false})
     isDeleted: boolean;
 
+    @Index()
     @OneToMany(() => RoomMessage, (message) => message.room)
     messages: RoomMessage[];
 }
