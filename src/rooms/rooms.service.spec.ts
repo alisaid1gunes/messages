@@ -26,7 +26,7 @@ describe('RoomsService', () => {
         RoomsService,
         {
           provide: getRepositoryToken(Room),
-          useClass: Repository, // Use the actual Repository class
+          useClass: Repository,
         },
         {
           provide: RoomMapper,
@@ -64,12 +64,14 @@ describe('RoomsService', () => {
         ],
       },
     ];
-
+      const totalCount = mockRooms.length
     jest.spyOn(roomRepositoryMock, 'createQueryBuilder').mockReturnValueOnce({
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
-      getMany: jest.fn().mockResolvedValueOnce(mockRooms),
+      limit: jest.fn().mockReturnThis(),
+      offset: jest.fn().mockReturnThis(),
+      getManyAndCount: jest.fn().mockResolvedValueOnce([mockRooms, totalCount])
     } as any);
 
     const roomDTOs: any[] = [
@@ -95,7 +97,7 @@ describe('RoomsService', () => {
 
     const result = await service.getRooms(new Pagination(1, 5));
 
-    expect(result).toEqual({ rooms: roomDTOs });
+    expect(result).toEqual({ rooms: roomDTOs,total: totalCount });
     expect(roomRepositoryMock.createQueryBuilder).toHaveBeenCalled();
     expect(roomMapperMock.mapRoomToDTO).toHaveBeenCalledTimes(mockRooms.length);
   });

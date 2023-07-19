@@ -16,35 +16,36 @@ export class RoomsService {
     }
 
     async getRooms(pagination: Pagination): Promise<{ rooms: RoomDTO[]; total: number }> {
-       try {
-           const skipCount = (pagination.page - 1) * pagination.pageSize;
+        try {
+            const skipCount = (pagination.page - 1) * pagination.pageSize;
 
-           const [rooms, total] = await this.roomRepository
-               .createQueryBuilder('room')
-               .leftJoinAndSelect('room.messages', 'message')
-               .leftJoinAndSelect('message.sender', 'sender')
-               .leftJoinAndSelect('message.receiver', 'receiver')
-               .where((qb) => {
-                   const subQuery = qb
-                       .subQuery()
-                       .select('MAX(message.createdAt)', 'maxCreatedAt')
-                       .from('room_message', 'message')
-                       .where('message.roomId = room.id')
-                       .getQuery();
-                   return 'message.createdAt = (' + subQuery + ')';
-               })
-               .orderBy('message.createdAt', 'DESC')
-               .take(pagination.pageSize)
-               .skip(skipCount)
-               .getManyAndCount();
+            const [rooms, total] = await this.roomRepository
+                .createQueryBuilder('room')
+                .leftJoinAndSelect('room.messages', 'message')
+                .leftJoinAndSelect('message.sender', 'sender')
+                .leftJoinAndSelect('message.receiver', 'receiver')
+                .where((qb) => {
+                    const subQuery = qb
+                        .subQuery()
+                        .select('MAX(message.createdAt)', 'maxCreatedAt')
+                        .from('room_message', 'message')
+                        .where('message.roomId = room.id')
+                        .getQuery();
+                    return 'message.createdAt = (' + subQuery + ')';
+                })
+                .orderBy('message.createdAt', 'DESC')
+                .limit(pagination.pageSize)
+                .offset(skipCount)
+                .getManyAndCount();
 
 
-           const roomDTOs = rooms.map((room) => this.roomMapper.mapRoomToDTO(room));
+            const roomDTOs = rooms.map((room) => this.roomMapper.mapRoomToDTO(room));
 
-           return {rooms: roomDTOs, total};
-       }catch (error) {
-           throw new Error("Message room error")
-       }
+            return {rooms: roomDTOs, total};
+        } catch (error) {
+            console.error(error)
+            throw new Error("Message room error")
+        }
     }
 
 

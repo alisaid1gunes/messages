@@ -43,6 +43,7 @@ describe('AppController (e2e)', () => {
           },
         },
       ],
+      total: 10
     });
 
     jest.spyOn(roomsService, 'getRooms').mockReturnValue(mockResult);
