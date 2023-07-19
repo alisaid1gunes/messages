@@ -46,7 +46,7 @@ export class SeedService {
 
         for (let i = 0; i < messageCount; i++) {
             const message = new RoomMessage();
-            message.content = chance.sentence();
+            message.content = chance.sentence({words:5});
             const randomTimestamp = chance.timestamp();
             message.createdAt = new Date(randomTimestamp * 1000);
             message.sender = chance.pickone(users);
