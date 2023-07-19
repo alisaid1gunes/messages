@@ -1,6 +1,6 @@
 import {Controller, Get, HttpException, HttpStatus} from '@nestjs/common';
 import {RoomsService} from './rooms.service';
-
+import { ControllerResponse } from '../shared/api-response';
 
 @Controller('rooms')
 export class RoomsController {
@@ -8,7 +8,7 @@ export class RoomsController {
     }
 
     @Get()
-    async findAll(): Promise<ControllerResponse<any>> {
+    async findAll():Promise<ControllerResponse <any>> {
         try {
             const result = await this.roomsService.getRooms();
             return {result, message: 'All rooms found'}

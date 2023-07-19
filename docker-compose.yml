@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - MYSQL_USER=${DATABASE_USERNAME}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+      - ${DATABASE_OUTSIDE_PORT}:${DATABASE_PORT}
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${DATABASE_USERNAME}", "-p${DATABASE_PASSWORD}"]
+      interval: 5s
+      timeout: 50s
+      retries: 3
+  api:
+    container_name: messages-api
+    build:
+      context: ./
+    image: messages-api
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: messages_db
+    links:
+      - db
+    volumes:
+      - ./:/src
+volumes:
+  db:
+    driver: local

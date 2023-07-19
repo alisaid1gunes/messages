@@ -1,10 +1,10 @@
-interface ApiResponse<T>{
+ export interface ApiResponse<T>{
     message: string,
     data?: T,
     success: boolean
 }
 
-interface ControllerResponse<T>{
+ export interface ControllerResponse<T>{
     message: string,
     result?: T,
 }
