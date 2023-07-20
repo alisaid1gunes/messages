@@ -11,7 +11,9 @@ import {RoomMessagesModule} from "./room-messages/room-messages.module";
 import {SeedService} from './seed/seed.service';
 import {APP_FILTER} from '@nestjs/core';
 import {HttpExceptionFilter} from "./filters/http-exception.filter";
-
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
+import type { RedisClientOptions } from 'redis';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -26,6 +28,12 @@ import {HttpExceptionFilter} from "./filters/http-exception.filter";
             database: configuration().database.name,
             entities: [User, Room, RoomMessage],
             synchronize: true,
+        }),
+        CacheModule.register<RedisClientOptions>({
+            store: redisStore,
+            isGlobal: true,
+            url:`redis://${configuration().redis.host}:${configuration().redis.port}`,
+            password: configuration().redis.password
         }),
         UsersModule,
         RoomsModule,

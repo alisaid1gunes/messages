@@ -1,13 +1,15 @@
-import {Controller, Get, HttpException, HttpStatus, Query} from '@nestjs/common';
+import {Controller, Get, HttpException, HttpStatus, Query, UseInterceptors} from '@nestjs/common';
 import {RoomsService} from './rooms.service';
 import { ControllerResponse } from '../shared/api-response';
 import {Pagination} from "../shared/pagination";
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('rooms')
 export class RoomsController {
     constructor(private readonly roomsService: RoomsService) {
     }
 
+    @UseInterceptors(CacheInterceptor)
     @Get()
     async findAll(@Query('page') page: number = 1, @Query('pageSize') pageSize: number = 10):Promise<ControllerResponse <any>> {
         try {

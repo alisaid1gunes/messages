@@ -8,6 +8,7 @@ The Messages project aims to provide a messaging service that allow listing room
 
 - **Nest.js**: Nest.js is used as the web application framework for handling API requests, routing, and middleware management.
 - **MySQL**: MySQL is used as the database management system to store and retrieve messaging data.
+- **Redis**: Redis is used to cache responses and improve performance for certain API endpoints.
 - **Swagger**: Swagger is used to generate API documentation, which can be accessed at [http://localhost:3000/api](http://localhost:3000/api).
 - **Compression**: Compression middleware is used to enhance the performance of the application by compressing the response data.
 - **Helmet**: Helmet middleware is used to enhance the security of the application by setting various HTTP headers.
@@ -28,6 +29,7 @@ During the development of the project, the following key considerations were tak
 - **Interceptor and Filters**: Custom interceptors and filters are used for handling custom responses, as well as catching and handling exceptions globally.
 - **Pagination for Listing**: Pagination is implemented in the listing endpoints to handle large data sets efficiently.
 - **Database Performance**: Indexing and proper data type selection are done to optimize database performance.
+- **Redis Caching**: Redis is used for caching responses, reducing response times and improving API performance.
 - **Docker Containers**: The application is containerized using Docker, enabling easy deployment and scalability.
 
 ## Project Setup
@@ -38,6 +40,7 @@ To run the project,if you don't use docker, make sure you have the following pre
 
 - Node.js and npm
 - MySQL database
+- Redis server
 
 ### Installation(If you dont use docker)
 

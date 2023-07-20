@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RoomsController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
 import { RoomDTO } from './dto/room.dto';
+import {CACHE_MANAGER, CacheInterceptor} from "@nestjs/cache-manager";
 
 class RoomServiceMock {
   async getRooms(): Promise<RoomDTO[]> {
@@ -23,7 +24,6 @@ class RoomServiceMock {
           },
         },
       },
-      // Add other room objects here
     ];
 
     return roomDTOs;
@@ -37,7 +37,14 @@ describe('RoomsController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RoomsController],
-      providers: [{ provide: RoomsService, useClass: RoomServiceMock }],
+      providers: [{ provide: RoomsService, useClass: RoomServiceMock },  {
+        provide: CACHE_MANAGER,
+        useValue: {}, // Replace this with the actual instance of your cache manager if needed
+      },
+        {
+          provide: CacheInterceptor,
+          useClass: CacheInterceptor, // You can replace this with a mock or a custom implementation if needed
+        },],
     }).compile();
 
     controller = module.get<RoomsController>(RoomsController);

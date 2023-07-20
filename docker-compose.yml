@@ -20,6 +20,7 @@ services:
       interval: 5s
       timeout: 50s
       retries: 3
+
   api:
     container_name: messages-api
     build:
@@ -27,6 +28,8 @@ services:
     image: messages-api
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
@@ -36,10 +39,29 @@ services:
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_NAME: messages_db
-    links:
-      - db
+      REDIS_HOST: redis
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     volumes:
       - ./:/src
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
 volumes:
   db:
+    driver: local
+  redis_data:
     driver: local
